@@ -630,7 +630,8 @@
             const visibleCards = cards.filter((c, i) => {
               if (i === 0) return false;
               if (!activeFilter) return true;
-              return c.dataset.categories && c.dataset.categories.includes(activeFilter);
+              const categories = c.dataset.categories ? c.dataset.categories.split(' ') : [];
+              return categories.includes(activeFilter);
             });
 
             const visibleIndex = visibleCards.indexOf(card);
@@ -753,9 +754,6 @@
       const btnShowMe = document.getElementById('btn-show-me');
       const btnClose = document.getElementById('btn-close');
       const triggers = document.querySelectorAll('.trigger-btn');
-      
-      const navAbout = document.getElementById('nav-about');
-      const navProjects = document.getElementById('nav-projects');
       
       const detailView = document.getElementById('detail-view');
       const detailCard = document.getElementById('detail-card');
@@ -935,30 +933,6 @@
             setTimeout(() => updateTriggersVisibility(), 400); 
           }, 300);
       }
-
-      navAbout.addEventListener('click', () => {
-          if (isOpen && topIndex === 0) return; 
-          if (isOpen) {
-              closeDetailView();
-              setTimeout(() => openDetailView(0), 600); 
-          } else {
-              openDetailView(0);
-          }
-      });
-
-      navProjects.addEventListener('click', () => {
-          setActiveFilter(null);
-          if (isOpen) {
-              closeDetailView();
-              setTimeout(() => {
-                  isGridLayout = true;
-                  updateTriggersVisibility();
-              }, 600);
-          } else {
-              isGridLayout = !isGridLayout; 
-              updateTriggersVisibility();
-          }
-      });
 
       cards.forEach((card, index) => {
           card.addEventListener('click', () => {
